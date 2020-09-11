@@ -17,24 +17,25 @@ class scraper():
 
         pass
 
-    def __WriteJson(self, json_data): #寫入 data.json
+    def __WriteJson(self, json_data): #write data.json
         with open("data.json", mode="a") as f:
-            f.write(json.dumps(json_data) + '\n') #以\n當作json結尾
+            f.write(json.dumps(json_data) + '\n') #add \n at the end of line
+        print(json_data)
 
     def __Get_PlaceID(self): #Country Level
         return self.api.geo_search(query='USA', granularity='country')[0].id
 
-    def __Get_Posts(self, nums, place_id): #改成獲取某個國家範圍的tweets
-        return tweepy.Cursor(self.api.search, q='place:{}'.format(place_id)+ ' -filter:retweets',lang="en", locale='en', count=40000, tweet_mode='extended').items(nums)
+    def __Get_Posts(self, nums, place_id): #searching certain tweets
+        return tweepy.Cursor(self.api.search, q='place:{}'.format(place_id)+ ' -filter:retweets',lang="en", locale='en', count=30000, tweet_mode='extended').items(nums)
 
-    def Start_Search(self, nums): #nums:需要的文章數量
+    def Start_Search(self, nums): #num of tweets to search
         
         place_id = self.__Get_PlaceID()
         Posts = self.__Get_Posts(nums, place_id)
 
         for post in Posts:
             #print (post.full_text + " | " + post.place.name if post.place else "Undefined place")
-            #if(post.place.name) 這行"應該"可以過濾掉沒有地理位置的tweets
+            #if(post.place.name) 
             self.__WriteJson(post._json)
 
 s = scraper()

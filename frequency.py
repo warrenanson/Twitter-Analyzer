@@ -18,13 +18,13 @@ def PrintResult():
             #print(line)
             
             json_data = json.loads(line)
-            if json_data['full_text'] != '':
+            if json_data['full_text'] != '':    # make sure data is exist
                 sep = json_data['full_text'].split(' ')
 
                 
                 for word in sep:
 
-                    word = re.sub(r'[^a-zA-Z0-9\'\"-\.?!~]', '', word) 
+                    word = re.sub(r'[^a-zA-Z0-9\'\"-\.?!~]', '', word) # filter non-english words
 
                     if(word == ''):
                         continue
@@ -36,7 +36,7 @@ def PrintResult():
                     '''
 
                     try:
-                        d[word] = d[word] + 1
+                        d[word] = d[word] + 1   # count 
                     except KeyError:
                         d[word] = 1
                         
@@ -44,10 +44,9 @@ def PrintResult():
                 #sum = 0
         print(total)
 
-    with open('frequency_output.txt','w') as f:
+    with open('frequency_output.txt','w') as f: # output to json
         for word in d:
             f.write("{} {} ".format(word, d[word]/total)+'\n')
-                #sum += d[word]/len(sep)
-            # print(sum)
+            print(word,' ',d[word]/total)
 
 PrintResult()
