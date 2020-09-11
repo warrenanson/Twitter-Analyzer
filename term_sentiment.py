@@ -4,7 +4,6 @@ import json
 
 keys = []
 values = []
-Dictionary = {}
 
 def solve_Phrase(Phrase):
 
@@ -20,9 +19,6 @@ def main():
     sent_file = open(sys.argv[1]) #Dictionary
     tweet_file = open(sys.argv[2]) #JsonData
 
-    f = open('data.json', mode='r')
-    js_data = json.load(f)
-
     line = sent_file.readline()
     while line != '':
         sep = line.strip()
@@ -37,28 +33,35 @@ def main():
 
     Dictionary = dict(zip(keys,values))
 
-    #讀檔
-    json_data = json.load(tweet_file)
-    if json_data['full_text'] != '':
-        sep = json_data['full_text'].split(' ')
+    #讀檔 + 寫檔
+    Output_File = open('term_sentiment_output.txt', mode='a')
+    count = 1
+    for line in tweet_file:
+        json_data = json.loads(line)
 
-        score = 0
-        for item in sep:
+        if json_data['full_text'] != '':
+            sep = json_data['full_text'].split(' ')
+
+            score = 0
+            for item in sep:
             
-            item = re.sub('[^a-zA-Z]', '', item)
-            if(item == ''):
-                continue
+                item = re.sub('[^a-zA-Z-]', '', item)
+                if(item == ''):
+                    continue
 
-            try:
-                score += Dictionary[str.lower(item)]
-                print('Match: '+ item)
-            except Exception:
-                pass
+                try:
+                    score += Dictionary[str.lower(item)]
+                    #print('Match: '+ item)
+                except Exception:
+                    pass
+            
+            Output_File.write('Tweet {} = {}\n'.format(count, score))
+            print('Tweet {} = {}'.format(count, score))
+            count += 1
+            #print("mood score : %d" %score)
 
-        print("mood score : %d" %score)
-
-    else:
-        print('No Score')
+        else:
+            print('No Score')
 
 
 if __name__ == '__main__':
