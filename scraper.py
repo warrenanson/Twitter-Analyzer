@@ -6,10 +6,10 @@ class scraper():
 
     def __init__(self):
         
-        consumer_key = "ssaVncgqH8vq1tsljpBouGUCT"
-        consumer_secret = "mQh1h6yjNqecIYxYdv4HYXwvnZv4YIlyPArDcAW2Q9rGa2OvNG"
-        access_token = "749926510610436096-cQnAkoND5Z3CM5ibT3gEhTp9Ha9Z347"
-        access_token_secret = "Tzwk8oJae8fg5TezDq2vjOr2RcJ1c1N0K8HP3DVFiIO2I"
+        consumer_key = "CNnLUVKtLvvktAQd0fIuV0Rnj"
+        consumer_secret = "Adze0YOeSHTcOIr8gdc4idpMTuZz52x0a12hgWEXbFjM9oGY5Y"
+        access_token = "1302926283010052097-v2Z7WOumXj97QgvHdyMRyvEGUEeUX0"
+        access_token_secret = "yaUL8SWyifip3lWunIHhYiwVXWIB2VEdze7P9kzyPDB9B"
 
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
